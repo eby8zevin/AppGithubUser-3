@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
+        android:layout_centerVertical="true"
         android:indeterminate="true"
         android:indeterminateDuration="3"
         android:indeterminateTint="@color/black"
