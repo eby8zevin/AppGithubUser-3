@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         showViewModel();
         showRecyclerView();
         userViewModel.isLoading().observe(this, this::showLoading);
+        binding.fab.setOnClickListener(v -> showFavorite());
     }
 
     private void showViewModel() {
@@ -121,12 +122,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if (item.getItemId() == R.id.refresh) {
-            Intent i = new Intent(MainActivity.this, MainActivity.class);
-            finish();
-            overridePendingTransition(0, 0);
-            startActivity(i);
-            overridePendingTransition(0, 0);
+        } else if (item.getItemId() == R.id.setting) {
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -146,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
             Toasty.warning(this, "Press once again to exit", Toasty.LENGTH_SHORT).show();
         }
         backPressed = System.currentTimeMillis();
+    }
+
+    private void showFavorite() {
+        Intent i = new Intent(this, FavoriteActivity.class);
+        startActivity(i);
     }
 
     private void showLoading(Boolean isLoading) {
