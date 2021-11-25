@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_github_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppGithubUser">
+        <activity android:name=".ui.SettingActivity"></activity>
         <activity android:name=".ui.FavoriteActivity" />
         <activity android:name=".ui.UserDetailActivity" />
         <activity android:name=".ui.MainActivity" />
