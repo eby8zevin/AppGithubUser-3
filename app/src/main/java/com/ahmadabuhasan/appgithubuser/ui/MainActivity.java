@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         } else if (item.getItemId() == R.id.setting) {
-
+            startActivity(new Intent(this, SettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
