@@ -9,8 +9,9 @@
         app:showAsAction="collapseActionView|ifRoom" />
     <group android:menuCategory="container">
         <item
-            android:id="@+id/refresh"
-            android:title="@string/refresh"
-            app:showAsAction="never" />
+            android:id="@+id/setting"
+            android:icon="@drawable/icon_settings"
+            android:title="@string/setting"
+            app:showAsAction="ifRoom" />
     </group>
 </menu>
