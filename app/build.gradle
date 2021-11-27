@@ -18,7 +18,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "TOKEN" , localProperties["API_GITHUB"])
+        buildConfigField("String", "TOKEN", localProperties["API_GITHUB"])
     }
 
     buildTypes {
@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
