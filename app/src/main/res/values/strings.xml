@@ -18,4 +18,5 @@
     <string name="following">Following</string>
     <string name="favorite">Favorite User\'s</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
 </resources>
