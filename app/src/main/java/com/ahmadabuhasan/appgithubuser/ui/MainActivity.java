@@ -1,11 +1,6 @@
 package com.ahmadabuhasan.appgithubuser.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,6 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.ahmadabuhasan.appgithubuser.R;
 import com.ahmadabuhasan.appgithubuser.adapter.SearchAdapter;
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityMainBinding;
@@ -25,8 +27,6 @@ import com.ahmadabuhasan.appgithubuser.model.SearchData;
 import com.ahmadabuhasan.appgithubuser.viewmodel.UserViewModel;
 
 import es.dmoral.toasty.Toasty;
-
-import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         searchAdapter = new SearchAdapter(this);
-        searchAdapter.notifyDataSetChanged();
         binding.rvGithub.setAdapter(searchAdapter);
 
         searchAdapter.setOnItemClickCallback(this::showSelectedUser);
