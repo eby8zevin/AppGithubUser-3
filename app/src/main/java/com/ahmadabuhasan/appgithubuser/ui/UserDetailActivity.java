@@ -35,15 +35,15 @@ import es.dmoral.toasty.Toasty;
 public class UserDetailActivity extends AppCompatActivity {
 
     private ActivityUserDetailBinding binding;
-    public static String dataUser;
     public static String DETAIL_USER = "DETAIL_USER";
-    UserViewModel userViewModel;
+    public static String dataUser;
+    private UserViewModel userViewModel;
+    private FavoriteHelper favoriteHelper;
     private final int[] TAB_CLICK = new int[]{
             R.string.followers,
             R.string.following
     };
     ArrayList<UserDetail> userDetailArrayList = new ArrayList<>();
-    private FavoriteHelper favoriteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class UserDetailActivity extends AppCompatActivity {
                                 Toasty.success(getApplicationContext(), "Added Favorite", Toasty.LENGTH_SHORT).show();
                             } else {
                                 userDetailArrayList = favoriteHelper.getAllFavorite();
-                                favoriteHelper.deleteFavorite(DETAIL_USER);
+                                favoriteHelper.deleteFavorite(dataUser);
                                 Toasty.error(getApplicationContext(), "Deleted Favorite", Toasty.LENGTH_SHORT).show();
                             }
                         });
@@ -111,7 +111,7 @@ public class UserDetailActivity extends AppCompatActivity {
                                 Toasty.success(getApplicationContext(), "Added Favorite", Toasty.LENGTH_SHORT).show();
                             } else {
                                 userDetailArrayList = favoriteHelper.getAllFavorite();
-                                favoriteHelper.deleteFavorite(DETAIL_USER);
+                                favoriteHelper.deleteFavorite(dataUser);
                                 Toasty.error(getApplicationContext(), "Deleted Favorite", Toasty.LENGTH_SHORT).show();
                             }
                         });
@@ -119,15 +119,15 @@ public class UserDetailActivity extends AppCompatActivity {
         });
     }
 
-    public Boolean FavoriteExist(String fav) {
+    public Boolean FavoriteExist(String user) {
         String select = DatabaseContract.FavoriteColumns.USERNAME + " =?";
-        String[] selArg = {fav};
+        String[] Arg = {user};
         String limit = "1";
         favoriteHelper = new FavoriteHelper(this);
         favoriteHelper.open();
         DatabaseHelper dataBaseHelper = new DatabaseHelper(UserDetailActivity.this);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.query(TABLE_NAME, null, select, selArg, null, null, null, limit);
+        Cursor cursor = database.query(TABLE_NAME, null, select, Arg, null, null, null, limit);
         boolean exists;
         exists = (cursor.getCount() > 0);
         cursor.close();
