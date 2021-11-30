@@ -15,7 +15,11 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
+import androidx.datastore.rxjava3.RxDataStore;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +28,9 @@ import com.ahmadabuhasan.appgithubuser.R;
 import com.ahmadabuhasan.appgithubuser.adapter.SearchAdapter;
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityMainBinding;
 import com.ahmadabuhasan.appgithubuser.model.SearchData;
+import com.ahmadabuhasan.appgithubuser.setting.SettingPreferences;
+import com.ahmadabuhasan.appgithubuser.setting.SettingViewModelFactory;
+import com.ahmadabuhasan.appgithubuser.viewmodel.SettingViewModel;
 import com.ahmadabuhasan.appgithubuser.viewmodel.UserViewModel;
 
 import es.dmoral.toasty.Toasty;
@@ -32,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private UserViewModel userViewModel;
+    private SettingViewModel settingViewModel;
+    private SettingPreferences pref;
     private SearchAdapter searchAdapter;
     private long backPressed;
 
@@ -45,11 +54,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.NoData.setVisibility(View.VISIBLE);
+
         binding.rvGithub.setHasFixedSize(true);
         showViewModel();
         showRecyclerView();
         userViewModel.isLoading().observe(this, this::showLoading);
+
         binding.fab.setOnClickListener(v -> showFavorite());
+
+        RxDataStore<Preferences> dataStore = new RxPreferenceDataStoreBuilder(this, "settings").build();
+        pref = SettingPreferences.getInstance(dataStore);
+        darkModeCheck();
     }
 
     private void showViewModel() {
@@ -147,6 +162,17 @@ public class MainActivity extends AppCompatActivity {
     private void showFavorite() {
         Intent i = new Intent(this, FavoriteActivity.class);
         startActivity(i);
+    }
+
+    private void darkModeCheck() {
+        settingViewModel = new ViewModelProvider(this, new SettingViewModelFactory(pref)).get(SettingViewModel.class);
+        settingViewModel.getThemeSettings().observe(this, isDarkModeActive -> {
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        });
     }
 
     private void showLoading(Boolean isLoading) {
