@@ -1,5 +1,12 @@
 package com.ahmadabuhasan.appgithubuser.model;
 
+import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.getFavorite;
+
+import android.database.Cursor;
+
+import androidx.annotation.NonNull;
+
+import com.ahmadabuhasan.appgithubuser.db.DatabaseContract;
 import com.google.gson.annotations.SerializedName;
 
 public class UserDetail {
@@ -116,5 +123,18 @@ public class UserDetail {
 
     public void setFollowing(String following) {
         this.following = following;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return
+                "UserDetail{" +
+                        "id = '" + id + '\'' +
+                        ",avatar_url = '" + avatarUrl + '\'' +
+                        ",html_url = '" + htmlUrl + '\'' +
+                        ",login = '" + username +
+                        "}";
+
     }
 }
