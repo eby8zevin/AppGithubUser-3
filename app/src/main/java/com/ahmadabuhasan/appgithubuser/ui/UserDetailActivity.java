@@ -1,10 +1,10 @@
 package com.ahmadabuhasan.appgithubuser.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.TABLE_NAME;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,14 +12,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.ahmadabuhasan.appgithubuser.R;
 import com.ahmadabuhasan.appgithubuser.adapter.ViewPagerAdapter;
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityUserDetailBinding;
+import com.ahmadabuhasan.appgithubuser.db.DatabaseContract;
+import com.ahmadabuhasan.appgithubuser.db.DatabaseHelper;
+import com.ahmadabuhasan.appgithubuser.db.FavoriteHelper;
+import com.ahmadabuhasan.appgithubuser.model.UserDetail;
 import com.ahmadabuhasan.appgithubuser.viewmodel.UserViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
 import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 public class UserDetailActivity extends AppCompatActivity {
 
@@ -31,6 +42,8 @@ public class UserDetailActivity extends AppCompatActivity {
             R.string.followers,
             R.string.following
     };
+    ArrayList<UserDetail> userDetailArrayList = new ArrayList<>();
+    private FavoriteHelper favoriteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,9 @@ public class UserDetailActivity extends AppCompatActivity {
         binding = ActivityUserDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        favoriteHelper = FavoriteHelper.getFavoriteHelper(getApplicationContext());
+        favoriteHelper.open();
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         binding.viewPager.setAdapter(viewPagerAdapter);
         new TabLayoutMediator(binding.tabsLayout, binding.viewPager,
@@ -51,6 +67,7 @@ public class UserDetailActivity extends AppCompatActivity {
         ).attach();
 
         dataUser = getIntent().getStringExtra(DETAIL_USER);
+
         showViewModel();
         userViewModel.isLoading().observe(this, this::showLoading);
     }
@@ -70,7 +87,52 @@ public class UserDetailActivity extends AppCompatActivity {
             binding.tvFollowers.setText(user.getFollowers());
             binding.tvRepository.setText(user.getRepository());
             binding.tvFollowing.setText(user.getFollowing());
+
+            if (FavoriteExist(dataUser)) {
+                binding.fabFavorite.setFavorite(true);
+                binding.fabFavorite.setOnFavoriteChangeListener(
+                        (buttonView, favorite) -> {
+                            if (favorite) {
+                                userDetailArrayList = favoriteHelper.getAllFavorite();
+                                favoriteHelper.insertFavorite(user);
+                                Toasty.success(getApplicationContext(), "Added Favorite", Toasty.LENGTH_SHORT).show();
+                            } else {
+                                userDetailArrayList = favoriteHelper.getAllFavorite();
+                                favoriteHelper.deleteFavorite(DETAIL_USER);
+                                Toasty.error(getApplicationContext(), "Deleted Favorite", Toasty.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                binding.fabFavorite.setOnFavoriteChangeListener(
+                        (buttonView, favorite) -> {
+                            if (favorite) {
+                                userDetailArrayList = favoriteHelper.getAllFavorite();
+                                favoriteHelper.insertFavorite(user);
+                                Toasty.success(getApplicationContext(), "Added Favorite", Toasty.LENGTH_SHORT).show();
+                            } else {
+                                userDetailArrayList = favoriteHelper.getAllFavorite();
+                                favoriteHelper.deleteFavorite(DETAIL_USER);
+                                Toasty.error(getApplicationContext(), "Deleted Favorite", Toasty.LENGTH_SHORT).show();
+                            }
+                        });
+            }
         });
+    }
+
+    public Boolean FavoriteExist(String fav) {
+        String select = DatabaseContract.FavoriteColumns.USERNAME + " =?";
+        String[] selArg = {fav};
+        String limit = "1";
+        favoriteHelper = new FavoriteHelper(this);
+        favoriteHelper.open();
+        DatabaseHelper dataBaseHelper = new DatabaseHelper(UserDetailActivity.this);
+        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+        Cursor cursor = database.query(TABLE_NAME, null, select, selArg, null, null, null, limit);
+        boolean exists;
+        exists = (cursor.getCount() > 0);
+        cursor.close();
+
+        return exists;
     }
 
     @Override
