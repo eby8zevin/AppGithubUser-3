@@ -11,8 +11,10 @@ import com.ahmadabuhasan.appgithubuser.model.UserDetail;
 
 import java.util.ArrayList;
 
-import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.ID;
 import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.TABLE_NAME;
+import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.ID;
+import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.AVATAR;
+import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.HTML;
 import static com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.USERNAME;
 
 public class FavoriteHelper {
@@ -62,6 +64,8 @@ public class FavoriteHelper {
             do {
                 userDetail = new UserDetail();
                 userDetail.setId(cursor.getInt(cursor.getColumnIndexOrThrow(ID)));
+                userDetail.setAvatarUrl(cursor.getString(cursor.getColumnIndexOrThrow(AVATAR)));
+                userDetail.setHtmlUrl(cursor.getString(cursor.getColumnIndexOrThrow(HTML)));
                 userDetail.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(USERNAME)));
                 arrayList.add(userDetail);
                 cursor.moveToNext();
@@ -74,6 +78,8 @@ public class FavoriteHelper {
     public long insertFavorite(UserDetail response) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, response.getId());
+        contentValues.put(AVATAR, response.getAvatarUrl());
+        contentValues.put(HTML, response.getHtmlUrl());
         contentValues.put(USERNAME, response.getUsername());
 
         return db.insert(DATABASE_TABLE, null, contentValues);
@@ -81,5 +87,20 @@ public class FavoriteHelper {
 
     public int deleteFavorite(String username) {
         return db.delete(TABLE_NAME, USERNAME + " = '" + username + "'", null);
+    }
+
+    public Cursor cursorFavoriteGet() {
+        return db.query(DATABASE_TABLE, null, null,
+                null, null, null, ID + " ASC");
+    }
+
+    public Cursor cursorFavoriteGetId(String id) {
+        return db.query(DATABASE_TABLE, null
+                , ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
     }
 }
