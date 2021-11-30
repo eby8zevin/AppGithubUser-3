@@ -32,6 +32,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public void setFavorite(ArrayList<UserDetail> data) {
         userDetailArrayList.clear();
         userDetailArrayList.addAll(data);
+        notifyDataSetChanged();
     }
 
     @NonNull
