@@ -88,19 +88,4 @@ public class FavoriteHelper {
     public int deleteFavorite(String username) {
         return db.delete(TABLE_NAME, USERNAME + " = '" + username + "'", null);
     }
-
-    public Cursor cursorFavoriteGet() {
-        return db.query(DATABASE_TABLE, null, null,
-                null, null, null, ID + " ASC");
-    }
-
-    public Cursor cursorFavoriteGetId(String id) {
-        return db.query(DATABASE_TABLE, null
-                , ID + " = ?"
-                , new String[]{id}
-                , null
-                , null
-                , null
-                , null);
-    }
 }
