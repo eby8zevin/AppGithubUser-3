@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "favorite.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String CREATE_TABLE = String.format(
+    private static final String CREATE_TABLE_FAVORITE = String.format(
             "CREATE TABLE %s" +
                     " (%s INTEGER PRIMARY KEY," +
                     " %s TEXT NOT NULL," +
@@ -22,11 +22,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             DatabaseContract.FavoriteColumns.AVATAR,
             DatabaseContract.FavoriteColumns.HTML,
             DatabaseContract.FavoriteColumns.USERNAME
-            );
+    );
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
     @Override
