@@ -20,6 +20,7 @@ import com.ahmadabuhasan.appgithubuser.model.SearchData;
 import com.ahmadabuhasan.appgithubuser.model.UserDetail;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -38,7 +39,7 @@ public class FavoriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite);
         setTitle(getResources().getString(R.string.favorite));
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         binding = ActivityFavoriteBinding.inflate(getLayoutInflater());
@@ -46,8 +47,9 @@ public class FavoriteActivity extends AppCompatActivity {
 
         favoriteHelper = FavoriteHelper.getFavoriteHelper(FavoriteActivity.this);
         favoriteHelper.open();
-        binding.rvFavorite.setHasFixedSize(true);
+
         showRecyclerView();
+        binding.rvFavorite.setHasFixedSize(true);
         getUserFavorite();
     }
 
@@ -58,17 +60,16 @@ public class FavoriteActivity extends AppCompatActivity {
             binding.rvFavorite.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        favoriteAdapter = new FavoriteAdapter();
-        favoriteAdapter.notifyDataSetChanged();
+        favoriteAdapter = new FavoriteAdapter(this);
         binding.rvFavorite.setAdapter(favoriteAdapter);
 
         favoriteAdapter.setOnItemClickCallback(this::showSelectedUser);
     }
 
-    private void showSelectedUser(SearchData user) {
+    private void showSelectedUser(UserDetail user) {
         Toasty.success(this, "You choose " + user.getUsername(), Toasty.LENGTH_SHORT).show();
 
-        Intent i = new Intent(SearchAdapter.context, UserDetailActivity.class);
+        Intent i = new Intent(FavoriteAdapter.context, UserDetailActivity.class);
         i.putExtra(DETAIL_USER, user.getUsername());
         SearchAdapter.context.startActivity(i);
     }
@@ -80,6 +81,12 @@ public class FavoriteActivity extends AppCompatActivity {
             binding.rvFavorite.setVisibility(View.VISIBLE);
             favoriteAdapter.setFavorite(userDetailArrayList);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserFavorite();
     }
 
     @Override
