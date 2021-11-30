@@ -1,22 +1,23 @@
 package com.ahmadabuhasan.appgithubuser.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ahmadabuhasan.appgithubuser.R;
 import com.ahmadabuhasan.appgithubuser.adapter.FavoriteAdapter;
 import com.ahmadabuhasan.appgithubuser.adapter.SearchAdapter;
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityFavoriteBinding;
 import com.ahmadabuhasan.appgithubuser.db.FavoriteHelper;
-import com.ahmadabuhasan.appgithubuser.model.SearchData;
 import com.ahmadabuhasan.appgithubuser.model.UserDetail;
 
 import java.util.ArrayList;
@@ -24,13 +25,11 @@ import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
-import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
-
 public class FavoriteActivity extends AppCompatActivity {
 
     private ActivityFavoriteBinding binding;
     private FavoriteAdapter favoriteAdapter;
-    FavoriteHelper favoriteHelper;
+    private FavoriteHelper favoriteHelper;
     ArrayList<UserDetail> userDetailArrayList = new ArrayList<>();
 
     @Override
@@ -50,7 +49,6 @@ public class FavoriteActivity extends AppCompatActivity {
 
         showRecyclerView();
         binding.rvFavorite.setHasFixedSize(true);
-        getUserFavorite();
     }
 
     private void showRecyclerView() {
@@ -74,19 +72,12 @@ public class FavoriteActivity extends AppCompatActivity {
         SearchAdapter.context.startActivity(i);
     }
 
-    private void getUserFavorite() {
-        if (userDetailArrayList.size() == 0) {
-            binding.rvFavorite.setVisibility(View.GONE);
-        } else {
-            binding.rvFavorite.setVisibility(View.VISIBLE);
-            favoriteAdapter.setFavorite(userDetailArrayList);
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        getUserFavorite();
+        userDetailArrayList = favoriteHelper.getAllFavorite();
+        favoriteAdapter.setFavorite(userDetailArrayList);
+        Log.d("Check", String.valueOf(userDetailArrayList));
     }
 
     @Override
