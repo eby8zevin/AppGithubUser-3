@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         showRecyclerView();
         binding.rvFavorite.setHasFixedSize(true);
+        getDataFavorite();
     }
 
     private void showRecyclerView() {
@@ -72,11 +74,22 @@ public class FavoriteActivity extends AppCompatActivity {
         SearchAdapter.context.startActivity(i);
     }
 
+    private void getDataFavorite() {
+        userDetailArrayList = favoriteHelper.getAllFavorite();
+        if (userDetailArrayList.size() == 0) {
+            binding.NoData.setVisibility(View.VISIBLE);
+            binding.rvFavorite.setVisibility(View.GONE);
+        } else {
+            binding.NoData.setVisibility(View.GONE);
+            binding.rvFavorite.setVisibility(View.VISIBLE);
+            favoriteAdapter.setFavorite(userDetailArrayList);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        userDetailArrayList = favoriteHelper.getAllFavorite();
-        favoriteAdapter.setFavorite(userDetailArrayList);
+        getDataFavorite();
         Log.d("Check", String.valueOf(userDetailArrayList));
     }
 
