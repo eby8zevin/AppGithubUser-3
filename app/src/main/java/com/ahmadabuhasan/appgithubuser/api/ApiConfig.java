@@ -21,7 +21,7 @@ public class ApiConfig {
         @Override
         public Response intercept(@NotNull Chain chain) throws IOException {
             Request request = chain.request().newBuilder()
-                    .header("Authorization", "Bearer " + BuildConfig.TOKEN)
+                    .header("Authorization", "token " + BuildConfig.TOKEN)
                     .build();
             return chain.proceed(request);
         }
