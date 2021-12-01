@@ -38,12 +38,13 @@ public class UserDetailActivity extends AppCompatActivity {
     public static String DETAIL_USER = "DETAIL_USER";
     public static String dataUser;
     private UserViewModel userViewModel;
-    private FavoriteHelper favoriteHelper;
     private final int[] TAB_CLICK = new int[]{
             R.string.followers,
             R.string.following
     };
+
     ArrayList<UserDetail> userDetailArrayList = new ArrayList<>();
+    private FavoriteHelper favoriteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class UserDetailActivity extends AppCompatActivity {
         ).attach();
 
         dataUser = getIntent().getStringExtra(DETAIL_USER);
-
         showViewModel();
         userViewModel.isLoading().observe(this, this::showLoading);
     }
