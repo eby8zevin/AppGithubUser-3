@@ -5,7 +5,6 @@ import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -90,7 +89,6 @@ public class FavoriteActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         getDataFavorite();
-        Log.d("Check", String.valueOf(userDetailArrayList));
     }
 
     @Override
