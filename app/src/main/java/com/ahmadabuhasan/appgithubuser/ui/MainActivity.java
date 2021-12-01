@@ -33,6 +33,8 @@ import com.ahmadabuhasan.appgithubuser.setting.SettingViewModelFactory;
 import com.ahmadabuhasan.appgithubuser.viewmodel.SettingViewModel;
 import com.ahmadabuhasan.appgithubuser.viewmodel.UserViewModel;
 
+import java.util.ArrayList;
+
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SettingViewModel settingViewModel;
     private SettingPreferences pref;
+    ArrayList<SearchData> searchDataArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.NoData.setVisibility(View.VISIBLE);
-
         binding.rvGithub.setHasFixedSize(true);
         showViewModel();
         showRecyclerView();
@@ -116,16 +118,22 @@ public class MainActivity extends AppCompatActivity {
             MenuItem closeSearch = menu.findItem(R.id.search);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setQueryHint(getResources().getString(R.string.search_hint));
+            searchView.setIconifiedByDefault(true);
+            searchView.setIconified(false);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    searchDataArrayList.clear();
+                    searchAdapter.setSearchData(searchDataArrayList);
+                    searchAdapter.notifyDataSetChanged();
                     userViewModel.setSearchUser(query);
+                    searchView.clearFocus();
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    userViewModel.setSearchUser(newText);
+                    //userViewModel.setSearchUser(newText);
                     return false;
                 }
             });
