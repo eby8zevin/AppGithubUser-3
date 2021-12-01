@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ahmadabuhasan.appgithubuser.ui.MainActivity;
 
+import java.util.Objects;
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override
@@ -19,9 +21,9 @@ public class SplashScreen extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
-        new Handler(Looper.getMainLooper()).postDelayed((Runnable) () -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             SplashScreen.this.startActivity(new Intent(SplashScreen.this, MainActivity.class));
             SplashScreen.this.finish();
         }, 3000);
