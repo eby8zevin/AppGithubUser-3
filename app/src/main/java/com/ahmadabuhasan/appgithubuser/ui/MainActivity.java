@@ -39,16 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private UserViewModel userViewModel;
-    private SettingViewModel settingViewModel;
-    private SettingPreferences pref;
     private SearchAdapter searchAdapter;
     private long backPressed;
+
+    private SettingViewModel settingViewModel;
+    private SettingPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.users_search);
+
+        RxDataStore<Preferences> dataStore = new RxPreferenceDataStoreBuilder(this, "settings").build();
+        pref = SettingPreferences.getInstance(dataStore);
+        darkModeCheck();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -61,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
         userViewModel.isLoading().observe(this, this::showLoading);
 
         binding.fab.setOnClickListener(v -> showFavorite());
-
-        RxDataStore<Preferences> dataStore = new RxPreferenceDataStoreBuilder(this, "settings").build();
-        pref = SettingPreferences.getInstance(dataStore);
-        darkModeCheck();
     }
 
     private void showViewModel() {
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         searchAdapter = new SearchAdapter(this);
+        searchAdapter.notifyDataSetChanged();
         binding.rvGithub.setAdapter(searchAdapter);
 
         searchAdapter.setOnItemClickCallback(this::showSelectedUser);
