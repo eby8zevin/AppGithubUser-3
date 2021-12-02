@@ -7,7 +7,10 @@
         <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/drawable/icon_unfavorite.xml" value="0.16332046332046332" />
         <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/activity_favorite.xml" value="0.1" />
         <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/activity_user_detail.xml" value="0.1" />
+        <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/followers_fragment.xml" value="0.1" />
+        <entry key="..\:/Android Studio/AppGithubUser3/app/src/main/res/layout/following_fragment.xml" value="0.1" />
       </map>
     </option>
   </component>
