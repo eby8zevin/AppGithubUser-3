@@ -15,7 +15,9 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_gravity="top|center"
+        android:indeterminate="true"
+        android:indeterminateDuration="3"
         android:indeterminateTint="@color/black"
         android:visibility="gone"
         tools:visibility="visible" />
