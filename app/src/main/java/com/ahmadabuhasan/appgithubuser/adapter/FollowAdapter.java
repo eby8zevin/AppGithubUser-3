@@ -1,5 +1,7 @@
 package com.ahmadabuhasan.appgithubuser.adapter;
 
+import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,8 +17,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import static com.ahmadabuhasan.appgithubuser.ui.UserDetailActivity.DETAIL_USER;
-
 public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder> {
 
     private final ArrayList<Follow> followList = new ArrayList<>();
@@ -29,7 +29,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
     public void setFollowList(ArrayList<Follow> data) {
         followList.clear();
         followList.addAll(data);
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // DiffUtils
     }
 
     @NonNull
