@@ -21,23 +21,23 @@ public class Follow {
         return username;
     }
 
-    public void setUsername(String username) {
+    /*public void setUsername(String username) {
         this.username = username;
-    }
+    }*/
 
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
+    /*public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
-    }
+    }*/
 
     public String getHtmlUrl() {
         return htmlUrl;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
+    /*public void setHtmlUrl(String htmlUrl) {
         this.htmlUrl = htmlUrl;
-    }
+    }*/
 }
