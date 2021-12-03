@@ -30,6 +30,7 @@ public class ApiConfig {
     public static ApiService getApiService() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor()
                 .setLevel(HttpLoggingInterceptor.Level.BODY);
+        // Saat menggunakan logging interceptor, pastikan kembali pesan log hanya akan ditampilkan pada mode debug.
         tokenInterceptor interceptor = new tokenInterceptor();
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
