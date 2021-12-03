@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +34,11 @@ public class FollowersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FollowersFragmentBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         followAdapter = new FollowAdapter(getContext());
         followAdapter.notifyDataSetChanged();
@@ -50,7 +56,7 @@ public class FollowersFragment extends Fragment {
             }
         });
         followersViewModel.isLoading().observe(getViewLifecycleOwner(), this::showLoading);
-        return view;
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
