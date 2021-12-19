@@ -10,7 +10,6 @@
 - Networking with Retrofit
 - LiveData
 - SQLite
-- Room
 - DataStore
 
 **Features:**
