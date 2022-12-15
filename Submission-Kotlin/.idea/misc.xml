@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/drawable/ic_company.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/drawable/ic_dot.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/drawable/ic_follow.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/drawable/ic_location.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/layout/activity_splash_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/layout/activity_user_detail.xml" value="0.3925925925925926" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-1/Submission-Kotlin/app/src/main/res/layout/items_user.xml" value="0.25" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/drawable/ic_search.xml" value="0.1315" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/drawable/tab_bg_select.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/drawable/tab_layout_select.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/activity_user_detail.xml" value="0.2" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/fragment_followers.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/fragment_following.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/items_user.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/layout/tab_layout_select.xml" value="0.1" />
+        <entry key="..\:/Users/NUR AIDA HASANAH/OneDrive/Documents/GitHub/AppGithubUser-2/Submission-Kotlin/app/src/main/res/menu/option_menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
