@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppGithubUser"
         tools:targetApi="31">
+        <activity android:name=".ui.SettingActivity" />
+        <activity android:name=".ui.FavoriteActivity" />
         <activity android:name=".ui.UserDetailActivity" />
         <activity android:name=".ui.MainActivity" />
         <activity
