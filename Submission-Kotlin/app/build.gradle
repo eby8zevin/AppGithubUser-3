@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "KEY", '"API_GITHUB_TOKEN"')
+        buildConfigField("String", "KEY", "\"YOUR_API_GITHUB\"")
     }
 
     buildTypes {
@@ -62,4 +62,9 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+
+    implementation 'com.github.ivbaranov:materialfavoritebutton:0.1.5'
 }
