@@ -6,20 +6,32 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadabuhasan.appgithubuser.R
 import com.ahmadabuhasan.appgithubuser.adapter.UserAdapter
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityMainBinding
 import com.ahmadabuhasan.appgithubuser.model.Items
+import com.ahmadabuhasan.appgithubuser.setting.SettingPreferences
+import com.ahmadabuhasan.appgithubuser.setting.ViewModelFactory
 import com.ahmadabuhasan.appgithubuser.viewmodel.MainViewModel
+import com.ahmadabuhasan.appgithubuser.viewmodel.SettingViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("settings")
+    private lateinit var viewModelSetting: SettingViewModel
 
     private val viewModel: MainViewModel by viewModels()
     private val adapter = UserAdapter()
@@ -30,9 +42,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        darkModeCheck()
         showViewModel()
         showRecyclerView()
         viewModel.getIsLoading.observe(this, this::showLoading)
+
+        binding.fabAdd.setOnClickListener {
+            val i = Intent(this, FavoriteActivity::class.java)
+            startActivity(i)
+        }
+    }
+
+    private fun darkModeCheck() {
+        val pref = SettingPreferences.getInstance(dataStore)
+        viewModelSetting =
+            ViewModelProvider(this, ViewModelFactory(pref))[SettingViewModel::class.java]
+
+        viewModelSetting.getThemeSettings().observe(this@MainActivity) { isDarkModeActive ->
+            if (isDarkModeActive) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun showViewModel() {
@@ -97,6 +126,19 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun showLoading(isLoading: Boolean) =
-        binding.progressBar.visibility == if (isLoading) View.VISIBLE else View.GONE
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.setting) {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
 }
