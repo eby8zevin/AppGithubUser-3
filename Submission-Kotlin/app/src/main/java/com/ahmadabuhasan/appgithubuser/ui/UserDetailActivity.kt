@@ -1,5 +1,7 @@
 package com.ahmadabuhasan.appgithubuser.ui
 
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ahmadabuhasan.appgithubuser.R
 import com.ahmadabuhasan.appgithubuser.adapter.SectionsPagerAdapter
 import com.ahmadabuhasan.appgithubuser.databinding.ActivityUserDetailBinding
+import com.ahmadabuhasan.appgithubuser.db.DatabaseContract
+import com.ahmadabuhasan.appgithubuser.db.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
+import com.ahmadabuhasan.appgithubuser.db.DatabaseHelper
+import com.ahmadabuhasan.appgithubuser.db.FavoriteHelper
+import com.ahmadabuhasan.appgithubuser.model.ResponseDetailUser
 import com.ahmadabuhasan.appgithubuser.viewmodel.MainViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -19,6 +26,9 @@ class UserDetailActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityUserDetailBinding
+
+    private var listFavorite = ArrayList<ResponseDetailUser>()
+    private lateinit var helper: FavoriteHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +50,9 @@ class UserDetailActivity : AppCompatActivity() {
         username = intent.getStringExtra(EXTRA_USER).toString()
         showViewModel()
         viewModel.getIsLoading.observe(this, this::showLoading)
+
+        helper = FavoriteHelper.getInstance(applicationContext)
+        helper.open()
     }
 
     private fun showViewModel() {
@@ -57,7 +70,51 @@ class UserDetailActivity : AppCompatActivity() {
             binding.tvRepositoryValue.text = detailUser.publicRepos
             binding.tvFollowersValue.text = detailUser.followers
             binding.tvFollowingValue.text = detailUser.following
+
+            if (favoriteExist(username)) {
+                binding.imageFavorite.isFavorite = true
+                binding.imageFavorite.setOnFavoriteChangeListener { _, favorite ->
+                    if (favorite) {
+                        listFavorite = helper.queryAll()
+                        helper.insert(detailUser)
+                    } else {
+                        listFavorite = helper.queryAll()
+                        helper.delete(username)
+                    }
+                    helper.close()
+                }
+            } else {
+                binding.imageFavorite.setOnFavoriteChangeListener { _, favorite ->
+                    if (favorite) {
+                        listFavorite = helper.queryAll()
+                        helper.insert(detailUser)
+                    } else {
+                        listFavorite = helper.queryAll()
+                        helper.delete(username)
+                    }
+                    helper.close()
+                }
+            }
         }
+    }
+
+    private fun favoriteExist(user: String): Boolean {
+        val choose: String = DatabaseContract.FavoriteColumns.LOGIN + " =?"
+        val chooseArg = arrayOf(user)
+        val limit = "1"
+
+        helper = FavoriteHelper(this)
+        helper.open()
+
+        val dataBaseHelper = DatabaseHelper(this@UserDetailActivity)
+        val database: SQLiteDatabase = dataBaseHelper.writableDatabase
+        val cursor: Cursor =
+            database.query(TABLE_NAME, null, choose, chooseArg, null, null, null, limit)
+        val exists: Boolean = cursor.count > 0
+        cursor.close()
+
+        database.close()
+        return exists
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -68,8 +125,13 @@ class UserDetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLoading(isLoading: Boolean) =
-        binding.progressBar.visibility == if (isLoading) View.VISIBLE else View.GONE
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
 
     companion object {
         const val EXTRA_USER = "extra_user"
