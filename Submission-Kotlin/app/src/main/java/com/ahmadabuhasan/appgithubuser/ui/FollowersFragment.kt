@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadabuhasan.appgithubuser.adapter.FollowAdapter
-import com.ahmadabuhasan.appgithubuser.databinding.FragmentFollowersBinding
+import com.ahmadabuhasan.appgithubuser.databinding.FragmentFollowBinding
 import com.ahmadabuhasan.appgithubuser.model.ResponseFollow
 import com.ahmadabuhasan.appgithubuser.viewmodel.MainViewModel
 
@@ -19,7 +19,7 @@ class FollowersFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private val adapter = FollowAdapter()
 
-    private lateinit var binding: FragmentFollowersBinding
+    private lateinit var binding: FragmentFollowBinding
     private val _binding get() = binding
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class FollowersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentFollowersBinding.inflate(inflater, container, false)
+        binding = FragmentFollowBinding.inflate(inflater, container, false)
         return _binding.root
     }
 
@@ -51,11 +51,9 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showRecyclerView() {
-        with(binding.rvFollowers) {
-            layoutManager = LinearLayoutManager(requireActivity())
-            setHasFixedSize(true)
-            adapter = adapter
-        }
+        binding.rvFollow.layoutManager = LinearLayoutManager(activity)
+        binding.rvFollow.setHasFixedSize(true)
+        binding.rvFollow.adapter = adapter
 
         adapter.setOnItemClickCallback { data -> selectedUser(data) }
     }
@@ -68,8 +66,13 @@ class FollowersFragment : Fragment() {
         startActivity(i)
     }
 
-    private fun showLoading(isLoading: Boolean) =
-        binding.progressBar.visibility == if (isLoading) View.VISIBLE else View.GONE
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
 
     override fun onResume() {
         super.onResume()
